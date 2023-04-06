@@ -3,44 +3,66 @@
 
 *** Settings ***
 
-# TODO: Write Dcocumentation e.g. Project Test scenario. CRUD Operation: Create, Read, Update, Delete
+Documentation		Project Test scenario CRUD Operation: Create, Read, Update, Delete
 
-Documentation	
-
-# TODO: Write Precondition, Postcondition, Tags
-
-Pre Condition	 
-Post Condition	
-Tags
+Pre Condition	 	Log in to system made
+Post Condition	 	Close Browser
+Tags				Project_create, Project_update, Project_delete, TS-1-project_page(For Jira project management issue reference)
 
 #******************* Common Variables ********************
 
 *** Variables ***
 
-# NOTE: Please Remove your login credential before uploading Assignments
-
-# TODO: Write Project creation field variables
-
+${NewBlankProjectUrl} = https://gitlab.com/projects/new#blank_project
+${ProjectName} = Project_Name
+${NewTemplateProjectUrl} = https://gitlab.com/projects/new#create_from_template
+${TemplateProjectName} = Project_Name_Template
+${HomeUrl} = https://gitlab.com/
+${TemplateProjectNameNew} = Project_Name_Template_New 
 
 
 #******************** Test Cases *************************
 
 *** Test Case ***
 
-# TODO: Write Positive and Negative Test Cases and Test Process steps
-
 # Positive Test
+Create blank project
+	Navigate To Create Blank Project Page  ${NewBlankProjectUrl}
+	Input Project name  ${ProjectName}
+	Submit form
+	Project Page Should Contain "Project '${ProjectName}' was successfully created."
 
-	Create blank project
-	Navigate
-	Insert  project name  Project_Nam
- 	Create template project 
-	Update name of template project
-	Delete template project
-	Valide that message is showing Project 'First project ' was successfully created.
+Create project from template
+	Navigate To Create From Template Page  ${NewTemplateProjectUrl}
+	Click on any Use Template button
+	Create From Template Page should open
+	Input Project name  ${TemplateProjectName}
+	Submit form
+	Project Page Should Contain "The project was successfully imported."
+
+Update name of template project
+	Navigate To Home Page ${HomeUrl} 
+	Select created project from Template ${TemplateProjectName}
+	Select Settings
+	Input Project name  ${TemplateProjectNameNew}
+	Submit Changes
+	Message showing on page '${TemplateProjectNameNew}' was successfully updated.
+
+Delete template project
+	Navigate To Home Page ${HomeUrl} 
+	Select created project from Template ${TemplateProjectName}
+	Select Settings
+	Select Advanced
+	Select Delete Project
+	Input indicated string
+	Submit Form
+	Message showing on page 'Project 'test_group / ${TemplateProjectName}' will be deleted on xxxx-xx-xx'
+
 
 # Negative Test
 
-	Create a blank project with the previous same name
-
-
+Error message Should Be Visible if Create a blank project with the previous same name
+	Navigate To Create Blank Project Page  ${NewBlankProjectUrl}
+	Input Project name  ${ProjectName}
+	Submit form
+	Error message should contain 'The form contains the following errors: Project namespace name has already been taken, Name has already been taken, Path has already been taken

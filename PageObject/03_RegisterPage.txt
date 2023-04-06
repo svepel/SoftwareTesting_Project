@@ -3,44 +3,72 @@
 
 *** Settings ***
 
-# TODO: Write Documentation e.g. User Registration Test scenario with verification, valid and invalid credentials.
+Documentation	Testing User Registration. Test scenario with verification, valid and invalid credentials.
 
-Documentation	
-
-# TODO: Write Precondition, Postcondition, Tags
-
-Pre Condition	
-Post Condition	
-Tags
+Pre Condition	Open Browser
+Post Condition	Close Browser
+Tags			Registration, TS-1-sign_up(For Jira project management issue reference)
 
 #******************* Common Variables ********************
 
 *** Variables ***
 
-# NOTE: Please Remove your login credential before uploading Assignments
-
-# TODO: Write Registration field variables
-
-LoginUrl = https://gitlab.com/users/sign_up
-
+${SingUpUrl} = https://gitlab.com/users/sign_up
+${FName} = Myname
+${LName} = Mysurname
+${USERNAME} = svepel123
+${Email} = xxxxxxxxxxx@gmail.com
+${PASSWORD} = testxx
+${InvalidUsername} = svepel
+${InvalidEmail} = xxxxxxxxx@gmail.
+${Empty} =  
 
 
 #******************** Test Cases *************************
 
 *** Test Case ***
 
-# TODO: Write Positive and Negative Test Cases and Test Process steps
-
 # Positive Test
 
-	Register user with valid username and password 
-	- Remember credentials which you are going to use for whole application testing 
+Register user with valid credentials
+	Navigate To Sing Up Page  ${SingUpUrl}
+    Input First Name  ${FName}
+	Input Last Name  ${LName}
+	Input Username  ${USERNAME}
+	Input Email  ${Email}
+	Input Password  ${PASSWORD}
+    Submit Credentials
+    Identity Verification page should open
 
 # Negative Test
 
-	Register user with same above username,
-		empty password,
-		invalid email,
-		Without recaptcha,
+Error message Should Be Visible After Input of Aready Taken Username 
+	Navigate To Sing Up Page  ${SingUpUrl}
+	Input Username  ${InvalidUsername}
+	Error message should contain 'Username is already taken'.
 
+Error message Should Be Visible if Password is empty
+	Navigate To Sing Up Page  ${SingUpUrl}
+	Input First Name  ${FName}
+	Input Last Name  ${LName}
+	Input Username  ${USERNAME}
+	Input Email  ${Email}
+	Input Password  ${Empty}
+    Submit Credentials
+	Error message should contain 'Minimum length is 8 characters.'.
+	
+Error message Should Be Visible if Input of Email is invalid
+	Navigate To Sing Up Page  ${SingUpUrl}
+	Input Email  ${InvalidEmail}
+	Error message should contain 'Please provide a valid email address.'.
+	
+Error message Should Be Visible if First name is empty
+	Navigate To Sing Up Page  ${SingUpUrl}
+	Input First Name  ${Empty}
+	Input Last Name  ${LName}
+	Input Username  ${USERNAME}
+	Input Email  ${Email}
+	Input Password  ${PASSWORD}
+    Submit Credentials
+	Error message should contain 'This field is required.'.
 

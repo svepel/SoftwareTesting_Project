@@ -2,22 +2,18 @@
 #******************** Settings ************************
 
 *** Settings ***
-Documentation	Issue Test scenario. CRUD Operation: Create, Read, Update, Delete
+Documentation	Issue Test scenario CRUD Operation: Create, Read, Update, Delete
 
-# TODO: Write Precondition and Postcondition, Tags 
-
-Pre Condition	Tips: Project must be created by the user before 
-Post Condition	
-Tags
+Pre Condition	Project must be created by the user before, Log in to system made 
+Post Condition	Close Browser
+Tags Issue_create, Issue_update, Issue_delete, TS-1-issie_page(For Jira project management issue reference)
 
 #******************* Common Variables ********************
 
 
 *** Variables ***
 
-# NOTE: Please Remove your login credential before uploading Assignments
-
-# TODO: Write Issue creation field variables, Updated name of the issue
+${NewBlankProjectUrl} = 
 
 
 
