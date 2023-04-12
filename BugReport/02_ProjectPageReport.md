@@ -15,6 +15,7 @@ The heading should be: "Create blank page"
   
 ## Relevant logs and/or screenshots
 tested on 11.04.2023 at 20:15, Chrome browser
+Screenshot: Bug_Screenshot.png
       
 ## Possible fixes
 Correct the spelling error
